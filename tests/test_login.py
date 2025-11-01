@@ -1,6 +1,6 @@
 import pytest
 import requests
-from conftest import MAIN_URL
+from helpers import MAIN_URL
 import allure
 
 class TestLoginCourier:
@@ -18,7 +18,6 @@ class TestLoginCourier:
         data = {"login": "ninja", "password": "1234"}
         data.pop(missing_field)
         response = requests.post(f"{MAIN_URL}/courier/login", data=data)
-
         assert response.status_code == 400
         assert "Недостаточно данных для входа" in response.text
     #тест с паролем падает, спросил у наставника, передаю его цитату:
@@ -28,7 +27,6 @@ class TestLoginCourier:
     def test_login_with_wrong_password_fails(self, create_courier):
         login, _, _ = create_courier
         response = requests.post(f"{MAIN_URL}/courier/login", data={"login": login, "password": "saskevernis"})
-
         assert response.status_code == 404
         assert response.json().get("message") =="Учетная запись не найдена"
     
@@ -36,14 +34,12 @@ class TestLoginCourier:
     def test_login_with_wrong_login_fails(self, create_courier):
         _, password, _ = create_courier
         response = requests.post(f"{MAIN_URL}/courier/login", data={"login": "saskevernis", "password": password})
-
         assert response.status_code == 404
         assert response.json().get("message") =="Учетная запись не найдена"
     
     @allure.title("Ошибка при авторизации несуществующего пользователя")
     def test_login_no_exist_user_fails(self):
         response = requests.post(f"{MAIN_URL}/courier/login", data={"login": "narutogdesaske", "password": "12345"})
-
         assert response.status_code == 404
         assert response.json().get("message") =="Учетная запись не найдена"
     

@@ -1,6 +1,6 @@
 import pytest
 import requests
-from conftest import generate_random_string, MAIN_URL
+from helpers import generate_random_string, MAIN_URL
 import allure
 
 class TestCreateCourier:
