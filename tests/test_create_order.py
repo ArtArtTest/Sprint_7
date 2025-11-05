@@ -11,11 +11,9 @@ class TestCreateOrder:
         assert response.status_code == 201
         track = response.json()["track"]
         assert "track" in response.json()
-        cancel_order_by_track(track)
+        cancel_resp = cancel_order_by_track(track)
+        assert cancel_resp.status_code == 200
         
-        # payload = order_paylord(color) 
-        # response = requests.post(f"{MAIN_URL}/orders", json=payload)
-        # assert response.status_code == 201
-        # assert "track" in response.json()
+        
 
 

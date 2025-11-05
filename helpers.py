@@ -59,5 +59,6 @@ def create_order(color=None):
     return requests.post(f"{MAIN_URL}/orders", json=payload)
 
 def cancel_order_by_track(track_number):
-    payload = {"track": track_number}
-    return requests.put(f"{MAIN_URL}/orders/cancel", json=payload)
+    url = f"{MAIN_URL}/orders/cancel"
+    params = {"track": track_number}
+    return requests.put(url, params=params)
