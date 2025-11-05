@@ -53,3 +53,11 @@ def order_paylord(color=None):
     if color is not None:
         payload["color"] = color
     return payload
+
+def create_order(color=None):
+    payload = order_paylord(color)
+    return requests.post(f"{MAIN_URL}/orders", json=payload)
+
+def cancel_order_by_track(track_number):
+    payload = {"track": track_number}
+    return requests.put(f"{MAIN_URL}/orders/cancel", json=payload)
